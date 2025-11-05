@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wednesday × Enid: Friendship Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Single Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #ffeef6;
+      font-family: 'Cormorant Garamond', serif;
+      color: #3b2d56;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    .dark-mode {
+      background: #0e0c15;
+      color: #f1eaff;
+    }
+
+    .main-layout {
+      width: 100%;
+      max-width: 1280px;
+      margin: 60px auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 400px;
+      width: 100%;
+      height: 450px;
+      border-radius: 22px;
+      background-image: url('enid.jpg');
+      background-size: cover;
+      background-position: center;
+      backdrop-filter: blur(5px);
+      padding: 40px 20px 20px; /* shifted downward content */
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      box-shadow: 0 10px 35px rgba(255, 113, 181, 0.55);
+      animation: floatUp 1s ease-out;
+      transition: 0.55s ease;
+    }
+
+    .dark-mode .container {
+      background-image: url('wednesday.jpg');
+      box-shadow: 0 10px 40px rgba(115, 28, 180, 0.7);
+    }
+
+    @keyframes floatUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1 {
+      margin: 0 0 20px;
+      font-weight: 700;
+      font-size: 2em;
+      text-shadow: 0 4px 16px rgba(255,255,255,0.3);
+    }
+
+    .dark-mode h1 {
+      text-shadow: 0 4px 14px rgba(0,0,0,0.7);
+    }
+
+    form {
+      width: 100%;
+      margin-top: 10px; /* pushed lower for better face visibility */
+      animation: fadeSlide 1s ease;
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 26px;
+      display: block;
+    }
+
+    /* Inputs */
+    input {
+      width: 95%;
+      padding: 10px 10px;
+      margin-top: 8px;
+      font-size: 1em;
+      border-radius: 10px;
+      border: 2px solid rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.4);
+      color: #000;
+      outline: none;
+      transition: 0.35s;
+    }
+
+    .dark-mode input {
+      border: 2px solid #bb86fc;
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+    }
+
+    input:focus {
+      transform: scale(1.05);
+      box-shadow: 0 0 12px #ff70c5;
+    }
+
+    .dark-mode input:focus {
+      box-shadow: 0 0 12px #a763f8;
+    }
+
+    /* Button */
+    button {
+      width: 100%;
+      margin-top: 28px;
+      padding: 12px;
+      font-size: 1em;
+      font-weight: 700;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: 0.35s;
+      background: linear-gradient(45deg, #ff63d0, #a86bff);
+      color: #fff;
+    }
+
+    .dark-mode button {
+      background: linear-gradient(45deg, #8b3df5, #3b145b);
+    }
+
+    button:hover {
+      transform: scale(1.06) translateY(-2px);
+    }
+
+    /* Theme toggle switch */
+    .switch {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      cursor: pointer;
+    }
+
+    .switch input {
+      display: none;
+    }
+
+    .slider {
+      width: 48px;
+      height: 25px;
+      background: #ffb1e5;
+      border-radius: 20px;
+      display: inline-block;
+      position: relative;
+      transition: 0.4s;
+    }
+
+    .slider:before {
+      content: "";
+      width: 19px;
+      height: 19px;
+      background: #fff;
+      border-radius: 50%;
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      transition: transform 0.4s;
+    }
+
+    input:checked + .slider {
+      background: #3d2a57;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(23px);
+    }
+
+    #error {
+      margin-top: 14px;
+      display: none;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    @media(max-width: 450px) {
+      .container {
+        height: auto;
+        padding-top: 70px; /* adjust for small screens too */
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- THEME SWITCH -->
+  <label class="switch">
+    <input type="checkbox" id="mode-toggle" />
+    <span class="slider"></span>
+  </label>
+
+  <div class="main-layout">
+    <div class="container">
+      <h1 id="quizTitle">Surprise 1</h1>
+
+
+      <form id="quizForm">
+        <label for="q1">Which movie did we watch as the only two girls in a sea of boys?</label>
+        <input type="text" id="q1" required>
+
+        <label for="q2">Which flower did I always give you?</label>
+        <input type="text" id="q2" required>
+
+        <label for="q3">Friendship Day caption?</label>
+        <input type="text" id="q3" required>
+
+        <button type="submit">Submit Answers</button>
+      </form>
+
+      <div id="error"></div>
+    </div>
+  </div>
+
+ <script>
+  const modeToggle = document.getElementById('mode-toggle');
+  const quizForm = document.getElementById('quizForm');
+  const errorMsg = document.getElementById('error');
+
+  const questionsLight = {
+    q1: "Movie watched together in boys-only theatre?",
+    q2: "Your favorite flower?",
+    q3: "Friendship Day caption?"
+  };
+
+  const answersLight = {
+    q1: "boys 3",
+    q2: "rose",
+    q3: "dost nahi bhai hai"
+  };
+
+  const questionsDark = {
+    q1: "My pet name?",
+    q2: "After our fight, which trip did I go on?",
+    q3: "Dream startup?"
+  };
+
+  const answersDark = {
+    q1: "manya",
+    q2: "toranmal",
+    q3: "vada pav"
+  };
+
+  function updateQuestions(theme) {
+  const labels = quizForm.querySelectorAll("label");
+  const themeSet = theme === "dark" ? questionsDark : questionsLight;
+
+  labels[0].textContent = themeSet.q1;
+  labels[1].textContent = themeSet.q2;
+  labels[2].textContent = themeSet.q3;
+
+  const title = document.getElementById("quizTitle");
+  title.textContent = theme === "dark" ? "Surprise 2" : "Surprise 1";
+
+  quizForm.reset();
+  errorMsg.style.display = "none";
+}
+
+
+  modeToggle.addEventListener('change', () => {
+    document.body.classList.toggle('dark-mode');
+    const currentTheme = document.body.classList.contains('dark-mode') ? "dark" : "light";
+    updateQuestions(currentTheme);
+  });
+
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    document.body.classList.add('dark-mode');
+    modeToggle.checked = true;
+    updateQuestions("dark");
+  } else {
+    updateQuestions("light");
+  }
+
+  quizForm.addEventListener('submit', function(e){
+  e.preventDefault();
+  const dark = document.body.classList.contains('dark-mode');
+  const rightAnswers = dark ? answersDark : answersLight;
+
+  let correct =
+    quizForm.q1.value.trim().toLowerCase() === rightAnswers.q1 &&
+    quizForm.q2.value.trim().toLowerCase() === rightAnswers.q2 &&
+    quizForm.q3.value.trim().toLowerCase() === rightAnswers.q3;
+
+  if (correct) {
+    if (dark) {
+      window.location.href = "birthday_dark.html";  // Surprise 2
+    } else {
+      window.location.href = "birthday_light.html"; // Surprise 1
+    }
+  } else {
+    errorMsg.textContent = "Wrong answers! Try again 🖤💗";
+    errorMsg.style.display = "block";
+  }
+});
+
+</script>
+
+
+</body>
+</html>
